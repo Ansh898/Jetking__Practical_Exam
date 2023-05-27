@@ -1,0 +1,43 @@
+1) Write a Lottery Smart Contract made by using Solidity and
+Remix IDE.
+
+
+Program for Lottery is as follows :-
+
+//SPDX-Licence-Identifier: MIT
+pragma solidity ^0.8.20;
+contract lottery {
+address public manager;
+address payable[] public players;
+constructor () {
+manager =msg.sender;
+}
+function alreadyentered() private view returns (bool) {
+for(uint i=0; i < players.length; i++) {
+if(players[i]  == msg.sender) {
+return true;
+}
+return false
+}
+}
+function enter() public payable {
+require(msg.sender i =manager, "manager cannot enter the lottery");
+require(msg.value >=1 ether , "insufficient funds");
+require(alreadyentered() ==false, "player already entered the lottery");
+players.push(payable(msg.sender));
+}
+function random() private view returns(uint) {
+return uint (sha256(abi.encodePacket(block.difficulty,block.number,players));
+}
+function pickwinner() public {
+require(msg.sender ==manager, "only manager can pick the winner");
+uint index = random() % players.length;
+address contractaddress = address.length;
+players[index].transfer(contractaddress.balance);
+players =new address payable[0];
+}
+function getpplayers() public view returns(address payable[]memory) {
+return players;
+}
+}
+
